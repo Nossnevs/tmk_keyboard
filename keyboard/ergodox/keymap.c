@@ -49,6 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define KC_L1   KC_FN21
 #define KC_L2   KC_FN22
 #define KC_L3   KC_FN23
+#define KC_ML1  KC_FN24
 /* switched numbers and most common symbol without shift mod */
 #define KC_INV1 KC_FN1
 #define KC_INV2 KC_FN2
@@ -69,6 +70,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define KC_SCLN KC_FN16           /* Only semicolon */
 #define KC_CLN  KC_FN17           /* Colon and pipe */
 #define KC_MNSA KC_FN18           /* -, ' (accent) and ` (grav accent) */
+#define KC_CRAL KC_FN19           /* CTRL + ALT
 
 /* ErgoDox keymap definition macro */
 #define KEYMAP(                                                 \
@@ -115,40 +117,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KEYMAP(  // layer 0 : default
         // left hand
-		L2,  INV1,INV2,INV3,INV4,INV5,BSHA,
-        LTE, Q,   W,   E,   R,   T,   LBRK,
-        TAB, A,   S,   D,   F,   G,
-        ESC, Z,   X,   C,   V,   B,   HOME,
-        L1,  LEFT,UP,  DOWN,RGHT,
-                                      DEL, LALT,
-                                           F5,
-                                 LSFT,BSPC,RCTL,
+	ESC ,INV1,INV2,INV3,INV4,INV5,BSHA,
+        LTE ,   Q,   W,   E,   R,   T,   LBRK,
+        TAB ,   A,   S,   D,   F,   G,
+        ML1  ,  Z,   X,   C,   V,   B,   HOME,
+        RCTL,  NO,  NO,  NO,  NO,
+                                      DEL, F5,
+                                           LALT,
+                                 LSFT,SPC, RCTL,
         // right hand
-             L3,  INV6,INV7,INV8,INV9,INV0,PLS,
+             0,   INV6,INV7,INV8,INV9,INV0,PLS,
              RBRK,Y,   U,   I,   O,   P,   AA,
                   H,   J,   K,   L,   OE,  AE,
              END, N,   M,   COMM,DOT, IMNS,CLN,
-			           QUOT,INS, RTDE,MNSA,SCLN,
+       		       QUOT,INS, RTDE,MNSA,SCLN,
         RALT,RGUI,
         PGUP,
         PGDN,ENT, SPC
     ),
-    KEYMAP(  // layer 1 : regular numbers
+    KEYMAP(  // layer 1 : numpad
         // left hand
-        TRNS,1,   2,   3,   4,   5,   TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-        L0,  TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,BSPC,UP,  DEL, TRNS,
+        TRNS,LSFT,LEFT,DOWN,RGHT,TRNS,TRNS,
+        RCTL,TRNS,HOME,TRNS,END,
                                       TRNS,TRNS,
                                            TRNS,
-                                 TRNS,TRNS,LCTL,
-        // right hand
-             TRNS,6,   7,   8,   9,   0,   TRNS,
+                                 TRNS,ENT ,CRAL,
+        // right hand numpad
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-                  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-                       TRNS,TRNS,TLDE,TRNS,TRNS,
+             TRNS,TRNS,7,   8,   9,   TRNS,TRNS,
+                  TRNS,4,   5,   6,   TRNS,TRNS,
+             TRNS,TRNS,1,   2,   3,   TRNS,TRNS,
+                       0,   TRNS,TLDE,TRNS,TRNS,
         TRNS,TRNS,
         TRNS,
         TRNS,TRNS,TRNS
@@ -242,10 +244,12 @@ static const uint16_t PROGMEM fn_actions[] = {
 	[16] = ACTION_MODS_KEY(MOD_RSFT, KC_COMM),  // ;
 	[17] = ACTION_FUNCTION(FN_COLON_PIPE),
 	[18] = ACTION_FUNCTION(FN_MINUS_ACCENT),
+	[19] = ACTION_MODS(MOD_LALT|MOD_LCTL),
     [20] = ACTION_FUNCTION(SET_L0_LED_OFF),
     [21] = ACTION_FUNCTION(SET_L1_WITH_LED),
     [22] = ACTION_FUNCTION(SET_L2_WITH_LED),
     [23] = ACTION_FUNCTION(SET_L3_WITH_LED),
+    [24] = ACTION_LAYER_MOMENTARY(1),
 };
 
 /* Set layer 3 and light up led on teensy board.
