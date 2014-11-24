@@ -61,6 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define KC_INV8 KC_FN8
 #define KC_INV9 KC_FN9
 #define KC_INV0 KC_FN0
+#define KC_IPLS KC_FN10
 /* unique special char keys */
 #define KC_LBRK KC_FN11           /* { and [  Left brackets */
 #define KC_RBRK KC_FN12           /* } and ]  Right brackets */
@@ -118,39 +119,39 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KEYMAP(  // layer 0 : default
         // left hand
 	ESC ,INV1,INV2,INV3,INV4,INV5,BSHA,
-        LTE ,   Q,   W,   E,   R,   T,   LBRK,
+        LTE ,   Q,   W,   E,   R,   T,LBRK,
         TAB ,   A,   S,   D,   F,   G,
-        ML1  ,  Z,   X,   C,   V,   B,   HOME,
+        LSFT,   Z,   X,   C,   V,   B,HOME,
         RCTL,  NO,  NO,  NO,  NO,
-                                      DEL, F5,
+                                       DEL,  F5,
                                            LALT,
-                                 LSFT,SPC, RCTL,
+                                 LSFT, SPC, ML1,
         // right hand
-             0,   INV6,INV7,INV8,INV9,INV0,PLS,
-             RBRK,Y,   U,   I,   O,   P,   AA,
-                  H,   J,   K,   L,   OE,  AE,
-             END, N,   M,   COMM,DOT, IMNS,CLN,
-       		       QUOT,INS, RTDE,MNSA,SCLN,
+                0,INV6,INV7,INV8,INV9,INV0, PLS,
+             RBRK,   Y,   U,   I,   O,   P,  AA,
+                     H,   J,   K,   L,  OE,  AE,
+             IPLS,   N,   M,COMM, DOT,MINS, CLN,
+       		       QUOT, INS,RTDE,MNSA,SCLN,
         RALT,RGUI,
         PGUP,
-        PGDN,ENT, SPC
+        PGDN, ENT, SPC
     ),
     KEYMAP(  // layer 1 : numpad
         // left hand
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,BSPC,UP,  DEL, TRNS,
-        TRNS,LSFT,LEFT,DOWN,RGHT,TRNS,TRNS,
+        TRNS,TRNS,BSPC,  UP, DEL,TRNS,
+        CRAL,LSFT,LEFT,DOWN,RGHT,TRNS,TRNS,
         RCTL,TRNS,HOME,TRNS,END,
                                       TRNS,TRNS,
                                            TRNS,
-                                 TRNS,ENT ,CRAL,
+                                 TRNS, ENT,TRNS,
         // right hand numpad
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-             TRNS,TRNS,7,   8,   9,   TRNS,TRNS,
-                  TRNS,4,   5,   6,   TRNS,TRNS,
-             TRNS,TRNS,1,   2,   3,   TRNS,TRNS,
-                       0,   TRNS,TLDE,TRNS,TRNS,
+             TRNS,TRNS,   7,   8,   9,TRNS,TRNS,
+                  TRNS,   4,   5,   6,TRNS,TRNS,
+             TRNS,TRNS,   1,   2,   3,TRNS,TRNS,
+                          0,TRNS,TLDE,TRNS,TRNS,
         TRNS,TRNS,
         TRNS,
         TRNS,TRNS,TRNS
@@ -209,6 +210,7 @@ enum function_id {
 	INV_7,
 	INV_8,
 	INV_9,
+	IPLS,
 	FN_LCBRACKET,
 	FN_RCBRACKET,
 	FN_TILDE,
@@ -236,6 +238,7 @@ static const uint16_t PROGMEM fn_actions[] = {
 	[7] = ACTION_FUNCTION(INV_7),
 	[8] = ACTION_FUNCTION(INV_8),
 	[9] = ACTION_FUNCTION(INV_9),
+        [10] = ACTION_FUNCTION(IPLS),
 	[11] = ACTION_FUNCTION(FN_LCBRACKET),
 	[12] = ACTION_FUNCTION(FN_RCBRACKET),
 	[13] = ACTION_FUNCTION(FN_BASHSLAH_AT),
@@ -403,6 +406,13 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
 				unregister_code(KC_9);
 			}
 			break;
+                case IPLS:
+            if (event.pressed) {
+                                inv_key(KC_PLS);
+                        } else {
+                                unregister_code(KC_PLS);
+                        }
+                        break;
 		case FN_LCBRACKET:
 			if (event.pressed) {
 				if (get_mods() == MOD_BIT(KC_LSHIFT)) {  // [ if shifted
